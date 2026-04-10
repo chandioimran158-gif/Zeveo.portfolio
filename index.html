@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zeveox — Post-Production Lab</title>
+  <meta name="description" content="Cinematic editor, VFX artist, and colorist portfolio." />
+  <style>
+    :root{--bg:#030303;--bg2:#080808;--text:#e5e5e5;--muted:#9ca3af;--accent:#f59e0b;--green:#25D366;--white:#fff;--black:#000}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    a{text-decoration:none;color:inherit} button{font:inherit} img{max-width:100%;display:block}
+    .container{max-width:1440px;margin:0 auto;padding:0 24px}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}.brand{display:flex;align-items:center;gap:12px}.brand-box{width:48px;height:48px;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px}.brand h1{margin:0;font-size:22px;letter-spacing:.22em}.brand small{display:block;color:#9ca3af;letter-spacing:.28em;font-size:9px;margin-top:3px}
+    .nav-links{display:flex;gap:28px;align-items:center}.nav-links a{font-size:10px;font-weight:800;letter-spacing:.25em;text-transform:uppercase;color:#d1d5db}.cta{background:var(--accent);color:#000;border:none;padding:14px 24px;font-size:10px;font-weight:900;letter-spacing:.2em;cursor:pointer}.menu-btn{display:none;background:none;border:none;color:#fff;font-size:26px}
+    .mobile-menu{display:none;position:fixed;inset:80px 0 0 0;background:rgba(3,3,3,.98);backdrop-filter:blur(14px);z-index:90;padding:28px 24px}.mobile-menu.open{display:block}.mobile-menu a,.mobile-menu button{display:block;width:100%;text-align:center;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.06);font-weight:900;font-size:30px;text-transform:uppercase;background:none;color:#fff;border-left:none;border-right:none;border-top:none}
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:110px}.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,#030303,rgba(0,0,0,.45),rgba(0,0,0,.3));z-index:1}.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1535016120720-40c646be8960?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;opacity:.38;animation:zoom 16s ease-in-out infinite}@keyframes zoom{0%,100%{transform:scale(1.03)}50%{transform:scale(1.08)}} .hero-content{position:relative;z-index:2;max-width:920px}.tags{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}.tag{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);padding:10px 14px;border-radius:999px;font-size:9px;font-weight:900;letter-spacing:.3em;text-transform:uppercase}.hero h2{font-size:clamp(54px,11vw,132px);line-height:.86;margin:0 0 22px;text-transform:uppercase}.stroke{color:transparent;-webkit-text-stroke:1.4px #fff;font-style:italic}.hero p{color:#9ca3af;font-size:clamp(18px,2.4vw,30px);line-height:1.6;max-width:860px}.hero-actions{display:flex;gap:18px;flex-wrap:wrap;margin-top:34px}.ghost{border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;padding:16px 22px;font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+    .ticker{background:#fff;color:#000;padding:18px 0;overflow:hidden;white-space:nowrap;border-top:1px solid #000;border-bottom:1px solid #000}.track{display:inline-block;animation:marquee 26s linear infinite}.track span{font-size:24px;font-weight:900;text-transform:uppercase;margin-right:48px}@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    section{padding:100px 0}.section-title{font-size:clamp(40px,8vw,94px);margin:0 0 24px;font-weight:900;text-transform:uppercase;letter-spacing:-.04em}.sub{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.42em;color:var(--accent);margin-bottom:14px}
+    .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}.profile-card{position:relative}.profile-card img{aspect-ratio:4/5;object-fit:cover;border:1px solid rgba(255,255,255,.12)}.badge{position:absolute;right:-20px;bottom:-20px;background:var(--accent);color:#000;padding:24px}.badge strong{display:block;font-size:40px;font-weight:900}.badge span{font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.72)}.profile-text p{color:#9ca3af;font-size:18px;line-height:1.85}.meta{display:grid;grid-template-columns:1fr 1fr;gap:24px;border-top:1px solid rgba(255,255,255,.1);padding-top:28px;margin-top:20px}.meta h4{margin:0 0 8px;font-size:11px;letter-spacing:.18em;text-transform:uppercase}.meta p{margin:0;font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:.14em}
+    .services{background:var(--bg2)} .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06)}.card{background:var(--bg2);padding:40px;min-height:260px}.card h3{font-size:28px;text-transform:uppercase;letter-spacing:-.03em}.card p{color:#9ca3af;line-height:1.7}
+    .portfolio-grid,.blog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px}.project{background:#111;border:1px solid rgba(255,255,255,.08);cursor:pointer}.project .thumb{aspect-ratio:16/9;overflow:hidden}.project .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease,opacity .4s ease;opacity:.85}.project:hover .thumb img{transform:scale(1.06);opacity:1}.project-body{padding:18px 0}.project h3{margin:0;font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:-.03em}.project small{display:block;margin-top:8px;color:#9ca3af;font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}
+    .pricing{background:#fff;color:#000}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.price-card{border:2px solid rgba(0,0,0,.1);padding:34px;cursor:pointer}.price-card.active{background:#000;color:#fff;border-color:#000;transform:scale(1.02)}.price-card h3{font-size:11px;letter-spacing:.28em;text-transform:uppercase}.price{font-size:66px;font-weight:900;letter-spacing:-.05em}.price-desc{font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:#6b7280}.features{margin:26px 0 32px;padding:0;list-style:none}.features li{margin:0 0 16px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;line-height:1.6}
+    .blog-grid{grid-template-columns:repeat(4,1fr)}.blog{border:1px solid rgba(255,255,255,.06);background:var(--bg2);padding:28px;cursor:pointer}.blog h3{font-size:28px;text-transform:uppercase;letter-spacing:-.03em}.blog p{color:#9ca3af;line-height:1.7}
+    footer{border-top:1px solid rgba(255,255,255,.06);background:#020202}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px}.footer-links a,.footer-links button{display:block;margin-bottom:16px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:#9ca3af;background:none;border:none;padding:0;cursor:pointer;text-align:left}.socials{display:flex;gap:12px}.socials a{width:46px;height:46px;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center}
+    .floating-wa{position:fixed;right:24px;bottom:24px;z-index:120;width:62px;height:62px;border-radius:999px;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;box-shadow:0 12px 40px rgba(37,211,102,.35)}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px;z-index:200}.modal.open{display:flex}.modal-box{width:min(960px,100%);max-height:90vh;overflow:auto;background:#050505;border:1px solid rgba(255,255,255,.1);padding:28px;position:relative}.close{position:absolute;top:18px;right:18px;background:none;color:#fff;border:none;font-size:28px;cursor:pointer}.status{margin-top:16px;padding:14px;border:1px solid transparent;font-size:14px;display:none}.status.show{display:block}.status.success{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:#86efac}.status.error{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:#fca5a5}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.input,textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.2);color:#fff;padding:14px 0;font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;outline:none} textarea{min-height:120px;resize:vertical}.hint{margin-top:18px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);padding:14px;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#9ca3af}
+    .mux-placeholder{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);padding:24px}.mux-frame{aspect-ratio:16/9;width:100%;border:none;background:#000}
+    @media (max-width:1100px){.cards,.pricing-grid,.blog-grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr 1fr}.portfolio-grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:820px){.nav-links{display:none}.menu-btn{display:block}.profile-grid,.portfolio-grid,.pricing-grid,.blog-grid,.footer-grid,.cards,.form-grid{grid-template-columns:1fr}.badge{position:static;display:inline-block;margin-top:16px}.container{padding:0 18px}.hero-actions{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="brand"><div class="brand-box">Z</div><div><h1>ZEVEOX</h1><small>POST-PRODUCTION LAB</small></div></a>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#insights">Insights</a>
+        <button class="cta" onclick="openBooking()">Hire Muhammad Ali</button>
+      </div>
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
+  </nav>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="#services" onclick="toggleMenu(false)">Services</a>
+    <a href="#portfolio" onclick="toggleMenu(false)">Portfolio</a>
+    <a href="#pricing" onclick="toggleMenu(false)">Pricing</a>
+    <a href="#insights" onclick="toggleMenu(false)">Insights</a>
+    <button onclick="toggleMenu(false);openBooking()">Book Consultation</button>
+  </div>
+
+  <section id="top" class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <div class="tags"><span class="tag">Visual Excellence</span><span class="tag">Precision Grading</span><span class="tag">VFX Mastery</span></div>
+      <h2>WE ENGINEER <br><span class="stroke">EMOTIONS.</span></h2>
+      <p>Muhammad Ali translates raw footage into cinematic revenue. Premium execution across <strong style="color:#f59e0b">DaVinci Resolve</strong>, <strong style="color:#fff">Adobe Premiere Pro</strong>, and <strong style="color:#fff">After Effects</strong>.</p>
+      <div class="hero-actions">
+        <button class="cta" onclick="openBooking()">Start Your Story</button>
+        <button class="ghost" onclick="openReel()">Showreel via Mux</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker"><div class="track"><span>ADOBE MASTER</span><span>DAVINCI CERTIFIED</span><span>4+ YEARS EXP</span><span>AFTER EFFECTS PRO</span><span>ELITE COLORIST</span><span>PREMIUM EDITOR</span><span>ADOBE MASTER</span><span>DAVINCI CERTIFIED</span><span>4+ YEARS EXP</span></div></div>
+
+  <section>
+    <div class="container profile-grid">
+      <div class="profile-card">
+        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=1200" alt="Muhammad Ali">
+        <div class="badge"><strong>4+ Years</strong><span>Post-Prod Mastery</span></div>
+      </div>
+      <div class="profile-text">
+        <div class="sub">Lead Creative Architect</div>
+        <h2 class="section-title" style="font-size:clamp(44px,8vw,88px)">Muhammad <br>Ali.</h2>
+        <p>Cinematic editor, VFX artist, and colorist focused on high-impact visual work that holds attention and elevates brands. The workflow combines Adobe Premiere Pro for story structure, DaVinci Resolve for finishing and color, and After Effects for motion systems and polish.</p>
+        <div class="meta">
+          <div><h4>The Toolkit</h4><p>Premiere | DaVinci | After Effects</p></div>
+          <div><h4>Specialty</h4><p style="color:#9ca3af">Commercials & Viral Shorts</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="services">
+    <div class="container">
+      <div class="sub">The Arsenal</div>
+      <h2 class="section-title">My <span class="stroke">Expertise.</span></h2>
+      <div class="cards">
+        <div class="card"><h3>Cinema Editing</h3><p>Expert storytelling with pacing built around retention, tension, and visual flow.</p></div>
+        <div class="card"><h3>Color Alchemy</h3><p>Clean correction, premium grading, controlled skin tones, and stronger emotional tone.</p></div>
+        <div class="card"><h3>VFX & Motion</h3><p>Tracking, motion design, typography, transitions, and high-end finishing polish.</p></div>
+        <div class="card"><h3>Sound Design</h3><p>Sharper impact through layered audio, cleaner transitions, and stronger scene energy.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="container">
+      <h2 class="section-title">The <span style="color:#f59e0b">Archives.</span></h2>
+      <div class="portfolio-grid">
+        <div class="project" onclick="openProject(0)"><div class="thumb"><img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=1200" alt="Velocity Unleashed"></div><div class="project-body"><h3>Velocity Unleashed</h3><small>Automotive Commercial</small></div></div>
+        <div class="project" onclick="openProject(1)"><div class="thumb"><img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=1200" alt="Neon Pulse"></div><div class="project-body"><h3>Neon Pulse</h3><small>Music Narrative</small></div></div>
+        <div class="project" onclick="openProject(2)"><div class="thumb"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200" alt="Apex Fitness"></div><div class="project-body"><h3>Apex Fitness</h3><small>Lifestyle Campaign</small></div></div>
+        <div class="project" onclick="openProject(3)"><div class="thumb"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=1200" alt="Street Cult"></div><div class="project-body"><h3>Street Cult</h3><small>Streetwear Promo</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <h2 class="section-title">Investment.</h2>
+      <div class="pricing-grid">
+        <div class="price-card" data-plan="Starter Edit" onclick="selectPlan(this)"><h3>Starter Edit</h3><div class="price">$250</div><div class="price-desc">Per Video (6-12 Minutes)</div><ul class="features"><li>Premium Premiere Pro Cut</li><li>DaVinci Color Correction</li><li>Dynamic Sound Design</li><li>2 Revision Rounds</li></ul><button class="cta" onclick="event.stopPropagation();openBooking('Starter Edit')">Secure Your Slot</button></div>
+        <div class="price-card active" data-plan="Professional Bundle" onclick="selectPlan(this)"><h3>Professional Bundle</h3><div class="price">$1,200</div><div class="price-desc">5 High-End Videos</div><ul class="features"><li>Advanced Narrative Pacing</li><li>Elite Color Grading</li><li>After Effects VFX & Motion</li><li>Unlimited Revisions</li></ul><button class="cta" onclick="event.stopPropagation();openBooking('Professional Bundle')">Secure Your Slot</button></div>
+        <div class="price-card" data-plan="Creator Retainer" onclick="selectPlan(this)"><h3>Creator Retainer</h3><div class="price">Custom</div><div class="price-desc">Monthly Collaboration</div><ul class="features"><li>Full Channel Strategy</li><li>Batch Content Production</li><li>High-End Motion Graphics</li><li>Dedicated Lead Editor</li></ul><button class="cta" onclick="event.stopPropagation();openBooking('Creator Retainer')">Secure Your Slot</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="insights">
+    <div class="container">
+      <div class="sub">The Editor's Desk</div>
+      <h2 class="section-title">Insights & <br><span class="stroke">Strategy.</span></h2>
+      <div class="blog-grid">
+        <div class="blog" onclick="openBlog(0)"><h3>The Psychology of the First 3 Seconds</h3><p>Learn how audio-led hooks, hard pattern interrupts, and curiosity gaps help stop the scroll and keep viewers watching.</p></div>
+        <div class="blog" onclick="openBlog(1)"><h3>Mastering After Effects for Commercials</h3><p>Modern premium edits need more than cuts. Motion systems, tracking, and invisible cleanup work drive perceived production value.</p></div>
+        <div class="blog" onclick="openBlog(2)"><h3>DaVinci Color Science: The Emotional Engine</h3><p>Expensive-looking work is rarely accidental. Controlled contrast, clean skin tones, and intentional palette design shape emotion.</p></div>
+        <div class="blog" onclick="openBlog(3)"><h3>Why Sound Design Makes Cheap Footage Feel Premium</h3><p>Better transitions, impact hits, room tone, and low-end control can completely change how expensive a video feels.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:20px"><div class="brand-box">Z</div><div><h1 style="font-size:28px">ZEVEOX</h1><small style="color:#f59e0b">MUHAMMAD ALI</small></div></div>
+        <p style="color:#9ca3af;max-width:420px;line-height:1.8">Engineering high-end visual stories and polished post-production systems for brands that do not want average work.</p>
+        <div class="socials"><a href="#">IG</a><a href="#">X</a><a href="#">IN</a><a id="waFooter" href="#" target="_blank">WA</a></div>
+      </div>
+      <div class="footer-links"><a href="#services">Services</a><a href="#portfolio">Portfolio</a><a href="#pricing">Investment</a><a href="#insights">The Editor's Desk</a></div>
+      <div class="footer-links"><button onclick="openPrivacy()">Privacy Policy</button><button onclick="openTerms()">Terms of Service</button><a id="waSupport" href="#" target="_blank">WhatsApp Support</a></div>
+    </div>
+    <div class="container" style="padding-top:24px;padding-bottom:40px;color:#6b7280;font-size:10px;font-weight:900;letter-spacing:.25em;text-transform:uppercase">© 2026 Zeveox by Muhammad Ali. All rights reserved.</div>
+  </footer>
+
+  <a id="waFloat" class="floating-wa" href="#" target="_blank" aria-label="WhatsApp">✆</a>
+
+  <div id="bookingModal" class="modal"><div class="modal-box"><button class="close" onclick="closeModal('bookingModal')">×</button><h2 class="section-title" style="font-size:48px">Secure Your <span style="color:#f59e0b">Session.</span></h2><form id="bookingForm"><div class="form-grid"><input class="input" name="name" type="text" placeholder="YOUR FULL NAME" required><input class="input" name="email" type="email" placeholder="BUSINESS EMAIL" required></div><textarea name="message" placeholder="DESCRIBE YOUR PROJECT VISION & TIMELINE" required></textarea><div class="hint">Selected Plan: <span id="selectedPlanText">Professional Bundle</span></div><div id="formStatus" class="status"></div><button class="cta" type="submit" id="submitBtn">Send Inquiry</button></form></div></div>
+  <div id="contentModal" class="modal"><div class="modal-box"><button class="close" onclick="closeModal('contentModal')">×</button><div id="contentBody"></div></div></div>
+  <div id="reelModal" class="modal"><div class="modal-box"><button class="close" onclick="closeModal('reelModal')">×</button><h2 class="section-title" style="font-size:48px">Showreel Preview</h2><div class="mux-placeholder"><p style="margin-top:0;font-size:18px;color:#fff">Mux player ready hai.</p><p>Replace <strong>MUX_PLAYBACK_ID</strong> inside <code>index.html</code> with your real Mux playback ID.</p><iframe id="muxFrame" class="mux-frame" allowfullscreen></iframe></div></div></div>
+
+  <script>
+    const WEB3FORMS_ACCESS_KEY='2beed1cd-9e01-4738-af28-b9aaca84b685';
+    const WHATSAPP_NUMBER='923293643577';
+    const WHATSAPP_BASE=`https://wa.me/${WHATSAPP_NUMBER}`;
+    const MUX_PLAYBACK_ID='YOUR_MUX_PLAYBACK_ID_HERE';
+    const selectedPlanText=document.getElementById('selectedPlanText');
+    const statusBox=document.getElementById('formStatus');
+    const submitBtn=document.getElementById('submitBtn');
+    const projects=[
+      {title:'Velocity Unleashed',client:'Automotive Commercial',img:'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=1200',summary:'Fast-cut performance ad edit focused on speed, contrast, and impact-driven sound design.'},
+      {title:'Neon Pulse',client:'Music Narrative',img:'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=1200',summary:'Music-led sequence with rhythm-based transitions, glow treatment, and atmosphere building.'},
+      {title:'Apex Fitness',client:'Lifestyle Campaign',img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200',summary:'High-energy campaign with motion typography, stronger pacing, and premium grade direction.'},
+      {title:'Street Cult',client:'Streetwear Promo',img:'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=1200',summary:'Street aesthetic promo using texture, contrast, motion accents, and punchier sound timing.'}
+    ];
+    const blogs=[
+      {title:'The Psychology of the First 3 Seconds',cat:'Retention Strategy',content:['The first three seconds decide whether most viewers stay or leave. In a crowded feed, weak openings kill momentum instantly.','A J-cut lets the next scene audio arrive before the visuals. That creates curiosity because the brain wants to match what it hears with what it sees.','Pattern interrupts matter. Sudden framing shifts, aggressive pacing, contrast changes, and sharp motion can break the viewer out of passive scrolling.']},
+      {title:'Mastering After Effects for Commercials',cat:'VFX & Motion',content:['Editing alone is not enough when a brand wants premium positioning. Motion graphics and VFX are often what separate average work from expensive-looking work.','Kinetic typography should move with rhythm, emphasis, and intent. Text is not decoration. It is part of the visual narrative.']},
+      {title:'DaVinci Color Science: The Emotional Engine',cat:'Color Grading',content:['Color is not a filter. It is emotional direction. Good grading tells the viewer how a scene should feel before a word is spoken.','Skin tone protection is critical. Bad grades usually reveal themselves first in unhealthy faces, muddy highlights, or crushed detail.']},
+      {title:'Why Sound Design Makes Cheap Footage Feel Premium',cat:'Audio Strategy',content:['Most weak edits sound empty before they look weak. Audio gives weight to cuts, movement, reveals, and pacing.','If the goal is premium perception, audio cannot be treated like an afterthought.']}
+    ];
+    function buildWhatsAppUrl(msg){return `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`}
+    const genericWa=buildWhatsAppUrl('Hello Muhammad Ali, I am interested in your premium video editing services. Let\'s discuss a project.');
+    document.getElementById('waFloat').href=genericWa; document.getElementById('waFooter').href=genericWa; document.getElementById('waSupport').href=genericWa;
+    function toggleMenu(force){const m=document.getElementById('mobileMenu'); if(typeof force==='boolean'){m.classList.toggle('open',force)} else m.classList.toggle('open')}
+    function openBooking(plan){if(plan) selectedPlanText.textContent=plan; document.getElementById('bookingModal').classList.add('open')}
+    function openReel(){document.getElementById('reelModal').classList.add('open'); if(MUX_PLAYBACK_ID && MUX_PLAYBACK_ID!=='YOUR_MUX_PLAYBACK_ID_HERE'){document.getElementById('muxFrame').src=`https://player.mux.com/${MUX_PLAYBACK_ID}`}}
+    function closeModal(id){document.getElementById(id).classList.remove('open')}
+    function selectPlan(el){document.querySelectorAll('.price-card').forEach(c=>c.classList.remove('active')); el.classList.add('active'); selectedPlanText.textContent=el.dataset.plan}
+    function openProject(i){const p=projects[i]; document.getElementById('contentBody').innerHTML=`<p class="sub">Case Study</p><h2 class="section-title" style="font-size:48px">${p.title}</h2><img src="${p.img}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px;margin-bottom:24px"><p style="font-size:11px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#f59e0b">${p.client}</p><p style="font-size:18px;line-height:1.9;color:#d1d5db">${p.summary}</p><div style="margin-top:28px"><button class="cta" onclick="closeModal('contentModal');openBooking()">Book Similar Project</button></div>`; document.getElementById('contentModal').classList.add('open')}
+    function openBlog(i){const b=blogs[i]; document.getElementById('contentBody').innerHTML=`<p class="sub">${b.cat}</p><h2 class="section-title" style="font-size:48px">${b.title}</h2>${b.content.map(x=>`<p style="font-size:18px;line-height:1.9;color:#d1d5db">${x}</p>`).join('')}<div style="margin-top:28px"><button class="cta" onclick="closeModal('contentModal');openBooking()">Apply These Strategies</button></div>`; document.getElementById('contentModal').classList.add('open')}
+    function openPrivacy(){document.getElementById('contentBody').innerHTML='<h2 class="section-title" style="font-size:42px"><span style="color:#f59e0b">Privacy</span> Protocol</h2><p style="line-height:1.9;color:#d1d5db">Information submitted through the contact form is used only for project communication and proposal discussion.</p>'; document.getElementById('contentModal').classList.add('open')}
+    function openTerms(){document.getElementById('contentBody').innerHTML='<h2 class="section-title" style="font-size:42px"><span style="color:#f59e0b">Service</span> Terms</h2><p style="line-height:1.9;color:#d1d5db">A retainer may be required before production starts, depending on project size and delivery priority.</p>'; document.getElementById('contentModal').classList.add('open')}
+    document.getElementById('bookingForm').addEventListener('submit', async function(e){
+      e.preventDefault(); statusBox.className='status'; statusBox.textContent=''; submitBtn.disabled=true; submitBtn.textContent='Sending Inquiry...';
+      try{
+        const fd=new FormData();
+        fd.append('access_key',WEB3FORMS_ACCESS_KEY);
+        fd.append('name',this.name.value);
+        fd.append('email',this.email.value);
+        fd.append('subject',`New Zeveox Inquiry - ${selectedPlanText.textContent}`);
+        fd.append('from_name','Zeveox Portfolio Form');
+        fd.append('message',`Selected Plan: ${selectedPlanText.textContent}\n\nProject Details:\n${this.message.value}`);
+        const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:fd});
+        const data=await res.json();
+        if(data.success){statusBox.textContent='Inquiry sent successfully. Check your inbox for this lead.'; statusBox.className='status success show'; this.reset();}
+        else{statusBox.textContent=data.message||'Form submit failed. Please try again.'; statusBox.className='status error show';}
+      }catch(err){statusBox.textContent='Network error. Please try again.'; statusBox.className='status error show';}
+      finally{submitBtn.disabled=false; submitBtn.textContent='Send Inquiry';}
+    });
+    window.addEventListener('keydown',e=>{if(e.key==='Escape'){['bookingModal','contentModal','reelModal'].forEach(closeModal);toggleMenu(false)}})
+  </script>
+</body>
+</html>
